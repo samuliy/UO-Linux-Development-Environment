@@ -1,0 +1,22 @@
+FROM archlinux:latest
+
+# Enable multilib packages.
+RUN echo "[multilib]" >> /etc/pacman.conf
+RUN echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
+
+# Install wine.
+RUN pacman -Suy --noconfirm
+RUN pacman -Sy --noconfirm wine-staging wine-mono winetricks wget jq
+
+# Create group.
+RUN groupadd uogroup \
+--gid 1000
+
+# Create user.
+RUN useradd uouser \
+--uid 1000 \
+--groups uogroup,video,audio \
+--create-home \
+--home-dir /home/uouser
+
+USER uouser
