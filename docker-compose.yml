@@ -1,0 +1,53 @@
+version: '3.5'
+
+networks:
+    uo-network:
+        name: 'uo-network'
+        driver: bridge
+        driver_opts:
+            com.docker.network.enable_ipv6: "false"
+
+services:
+    servuo:
+        hostname: servuo
+        container_name: servuo
+        build:
+            context: ./ServUO
+        entrypoint: /usr/local/bin/docker-entrypoint.sh
+        volumes:
+            - ./ServUO/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
+            - ./UOData:/UOData
+            - ./ServUO/ServUO:/ServUO
+        networks:
+            uo-network:
+        tty: true
+    classicuo-build:
+        container_name: classicuo-build
+        build:
+            context: ./ClassicUO
+        volumes:
+            - ./UOData:/UOData
+            - ./ClassicUO/ClassicUO:/ClassicUO
+    classicuo:
+        container_name: classicuo
+        build:
+            context: ./ClassicUO
+            dockerfile: Dockerfile.run
+        entrypoint: /usr/local/bin/docker-entrypoint.sh
+        environment:
+            DISPLAY: "${DISPLAY}"
+            UO_SERVER_HOST: "servuo"
+            UO_SERVER_PORT: "2593"
+            XDG_RUNTIME_DIR: "${XDG_RUNTIME_DIR}"
+        working_dir: /ClassicUO
+        volumes:
+            - ./ClassicUO/docker-entrypoint.run.sh:/usr/local/bin/docker-entrypoint.sh
+            - ./UOData:/UOData
+            - ./ClassicUO/ClassicUO:/ClassicUO
+            - /tmp/.X11-unix:/tmp/.X11-unix
+            - ${XDG_RUNTIME_DIR}:/var/run/user/1000
+            - ./Wine:/home/uouser/.wine
+        networks:
+            uo-network:
+        # Run as privileged. Lazy way of getting all the devices available etc.
+        privileged: true
