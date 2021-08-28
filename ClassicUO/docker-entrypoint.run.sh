@@ -16,4 +16,4 @@ ln -s /UOData .
 ln -s /ClassicUO/bin/Debug ClassicUO
 cd ClassicUO
 
-wine ClassicUO.exe
+bash
