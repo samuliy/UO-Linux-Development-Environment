@@ -1,4 +1,6 @@
-FROM mono:6.12
+FROM ubuntu:latest
+
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 # Mount Ultima Online data directory here.
 VOLUME /UOData
@@ -18,7 +20,13 @@ RUN useradd uouser \
 --create-home \
 --home-dir /home/uouser
 
+# Add Microsoft package repository for dotnet.
+RUN apt update -qy && apt install -qy wget
+RUN wget https://packages.microsoft.com/config/ubuntu/21.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+RUN dpkg -i packages-microsoft-prod.deb
+RUN rm packages-microsoft-prod.deb
+
 # Install dependencies.
-RUN apt update -qy && apt install -qy make zlib1g-dev
+RUN apt update -qy && apt install -qy make zlib1g-dev mono-complete dotnet-sdk-5.0
 
 USER uouser
