@@ -12,7 +12,9 @@ services:
         hostname: servuo
         container_name: servuo
         build:
-            context: ./ServUO
+            context: .
+            dockerfile: Dockerfile.dotnet
+            target: servuo
         entrypoint: /usr/local/bin/docker-entrypoint.sh
         volumes:
             - ./ServUO/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
@@ -24,8 +26,12 @@ services:
     classicuo-build:
         container_name: classicuo-build
         build:
-            context: ./ClassicUO
+            context: .
+            dockerfile: Dockerfile.dotnet
+            target: classicuo
+        entrypoint: /usr/local/bin/docker-entrypoint.sh
         volumes:
+            - ./ClassicUO/docker-entrypoint.build.sh:/usr/local/bin/docker-entrypoint.sh
             - ./UOData:/UOData
             - ./ClassicUO/ClassicUO:/ClassicUO
     classicuo:

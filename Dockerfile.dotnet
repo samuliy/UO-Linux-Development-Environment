@@ -1,0 +1,45 @@
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS base
+
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+# Mount Ultima Online data directory here.
+VOLUME /UOData
+
+# Create user group.
+RUN groupadd uogroup \
+--gid 1000
+
+# Create user.
+RUN useradd uouser \
+--uid 1000 \
+--gid 1000 \
+--create-home \
+--home-dir /home/uouser
+
+### TARGET: servuo
+##
+#
+FROM base AS servuo
+
+# Install dependencies.
+RUN apt update -qy && apt install -qy make zlib1g-dev mono-complete
+
+# Mount ServUO source codes here.
+VOLUME /ServUO
+WORKDIR /ServUO
+
+USER uouser
+
+### TARGET: classicuo
+##
+#
+FROM base AS classicuo
+
+# Install dependencies.
+RUN apt update -qy && apt install -qy zlib1g-dev mono-complete
+
+# Mount ClassicUO source codes here.
+VOLUME /ClassicUO
+WORKDIR /ClassicUO
+
+USER uouser
