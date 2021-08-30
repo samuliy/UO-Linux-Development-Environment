@@ -16,13 +16,16 @@ RUN useradd uouser \
 --create-home \
 --home-dir /home/uouser
 
+# Install dependencies.
+RUN apt update -qy && apt install -qy zlib1g-dev mono-complete
+
 ### TARGET: servuo
 ##
 #
 FROM base AS servuo
 
-# Install dependencies.
-RUN apt update -qy && apt install -qy make zlib1g-dev mono-complete
+# Install make.
+RUN apt update -qy && apt install -qy make
 
 # Mount ServUO source codes here.
 VOLUME /ServUO
@@ -34,9 +37,6 @@ USER uouser
 ##
 #
 FROM base AS classicuo
-
-# Install dependencies.
-RUN apt update -qy && apt install -qy zlib1g-dev mono-complete
 
 # Mount ClassicUO source codes here.
 VOLUME /ClassicUO
