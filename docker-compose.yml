@@ -18,7 +18,7 @@ services:
         entrypoint: /usr/local/bin/docker-entrypoint.sh
         volumes:
             - ./ServUO/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
-            - ./UOData:/UOData
+            - ${UO_DATA_PATH}:/UOData
             - ./ServUO/ServUO:/ServUO
         networks:
             uo-network:
@@ -32,7 +32,7 @@ services:
         entrypoint: /usr/local/bin/docker-entrypoint.sh
         volumes:
             - ./ClassicUO/docker-entrypoint.build.sh:/usr/local/bin/docker-entrypoint.sh
-            - ./UOData:/UOData
+            - ${UO_DATA_PATH}:/UOData
             - ./ClassicUO/ClassicUO:/ClassicUO
     classicuo:
         depends_on:
@@ -51,7 +51,7 @@ services:
         working_dir: /ClassicUO
         volumes:
             - ./ClassicUO/docker-entrypoint.run.sh:/usr/local/bin/docker-entrypoint.sh
-            - ./UOData:/UOData
+            - ${UO_DATA_PATH}:/UOData
             - ./ClassicUO/ClassicUO:/ClassicUO
             - /tmp/.X11-unix:/tmp/.X11-unix
             - ${XDG_RUNTIME_DIR}:/var/run/user/1000
