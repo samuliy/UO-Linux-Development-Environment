@@ -19,4 +19,6 @@ RUN useradd uouser \
 --create-home \
 --home-dir /home/uouser
 
+RUN setcap 'cap_net_admin,cap_net_raw+ep' /usr/bin/ping
+
 USER uouser
