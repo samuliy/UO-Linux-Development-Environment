@@ -40,8 +40,8 @@ services:
                 condition: service_completed_successfully
         container_name: classicuo
         build:
-            context: ./ClassicUO
-            dockerfile: Dockerfile.run
+            context: .
+            dockerfile: Dockerfile.wine
         entrypoint: /usr/local/bin/docker-entrypoint.sh
         environment:
             DISPLAY: "${DISPLAY}"
