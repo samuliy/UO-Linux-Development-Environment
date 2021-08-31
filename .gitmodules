@@ -1,6 +1,3 @@
 [submodule "ServUO/ServUO"]
 	path = ServUO/ServUO
 	url = https://github.com/ServUO/ServUO
-[submodule "ClassicUO/ClassicUO"]
-	path = ClassicUO/ClassicUO
-	url = https://github.com/andreakarasho/classicuo
