@@ -47,7 +47,7 @@ services:
             DISPLAY: "${DISPLAY}"
             UO_SERVER_HOST: "${UO_SERVER_HOST}"
             UO_SERVER_PORT: "${UO_SERVER_PORT}"
-            XDG_RUNTIME_DIR: "${XDG_RUNTIME_DIR}"
+            XDG_RUNTIME_DIR: "/var/run/user/1000"
         working_dir: /ClassicUO
         volumes:
             - ./ClassicUO/docker-entrypoint.run.sh:/usr/local/bin/docker-entrypoint.sh
