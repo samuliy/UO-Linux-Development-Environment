@@ -1,0 +1,24 @@
+#!/bin/bash
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+ENV_FILE="$SCRIPT_DIR/../.env"
+
+VIDEO_GID=$(getent group video | cut -d ':' -f 3)
+AUDIO_GID=$(getent group audio | cut -d ':' -f 3)
+INPUT_GID=$(getent group input | cut -d ':' -f 3)
+
+if ! grep -q "VIDEO_GID=" $ENV_FILE ; then
+	echo "VIDEO_GID=$VIDEO_GID" >> $ENV_FILE
+else
+	sed -i "s/^VIDEO_GID=.*/VIDEO_GID=$VIDEO_GID/" $ENV_FILE
+fi
+if ! grep -q "AUDIO_GID=" $ENV_FILE ; then
+	echo "AUDIO_GID=$AUDIO_GID" >> $ENV_FILE
+else
+	sed -i "s/^AUDIO_GID=.*/AUDIO_GID=$AUDIO_GID/" $ENV_FILE
+fi
+if ! grep -q "INPUT_GID=" $ENV_FILE ; then
+	echo "INPUT_GID=$INPUT_GID" >> $ENV_FILE
+else
+	sed -i "s/^INPUT_GID=.*/INPUT_GID=$INPUT_GID/" $ENV_FILE
+fi
