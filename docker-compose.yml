@@ -52,6 +52,7 @@ services:
             UO_SERVER_HOST: "${UO_SERVER_HOST}"
             UO_SERVER_PORT: "${UO_SERVER_PORT}"
             XDG_RUNTIME_DIR: "/var/run/user/1000"
+            WINE_RENDERER: "${WINE_RENDERER}"
         working_dir: /ClassicUO
         volumes:
             - ./ClassicUO/docker-entrypoint.run.sh:/usr/local/bin/docker-entrypoint.sh
