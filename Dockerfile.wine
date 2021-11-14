@@ -1,4 +1,7 @@
 FROM archlinux:latest
+ARG VIDEO_GID
+ARG AUDIO_GID
+ARG INPUT_GID
 
 # Enable multilib packages.
 RUN echo "[multilib]" >> /etc/pacman.conf
@@ -12,10 +15,17 @@ RUN pacman -Sy --noconfirm wine-staging wine-mono winetricks wget jq lib32-mpg12
 RUN groupadd uogroup \
 --gid 1000
 
+# Modify video, audio and input groups.
+# The gids must be the same as in the host,
+# to allow us to access video/audio/input from the container.
+RUN groupmod -g ${VIDEO_GID} video
+RUN groupmod -g ${AUDIO_GID} audio
+RUN groupmod -g ${INPUT_GID} input
+
 # Create user.
 RUN useradd uouser \
 --uid 1000 \
---groups uogroup,video,audio \
+--groups uogroup,video,audio,input \
 --create-home \
 --home-dir /home/uouser
 

@@ -9,6 +9,7 @@ The environment makes it easier to start a local Ultima Online server and connec
 Install the Ultima Online Legacy Client data files into the UOData directory.
 
 * `git submodule update --init --recursive --remote`
+* `bin/set-env-gids`
 * `docker-compose build`
 * `docker-compose run servuo`
 * `docker-compose run classicuo`
