@@ -51,10 +51,10 @@ if [[ -z "$WINE_RENDERER" ]]; then
 fi
 winetricks renderer=$WINE_RENDERER
 
-mkdir /home/uouser/classicuo
+mkdir -p /home/uouser/classicuo
 cd /home/uouser/classicuo
-ln -s /UOData .
-ln -s /ClassicUO/bin/Debug ClassicUO
+ln -sf /UOData .
+ln -sf /ClassicUO/bin/Debug ClassicUO
 cd ClassicUO
 
 wine ClassicUO.exe
