@@ -46,7 +46,10 @@ jq ".ip = \"$UO_SERVER_HOST\" | .port = \"$UO_SERVER_PORT\" | .ultimaonlinedirec
 cd /ClassicUO/bin/Debug
 mv -f $tmpfile settings.json
 
-winetricks renderer=gdi
+if [[ -z "$WINE_RENDERER" ]]; then
+	WINE_RENDERER=gdi
+fi
+winetricks renderer=$WINE_RENDERER
 
 mkdir /home/uouser/classicuo
 cd /home/uouser/classicuo
